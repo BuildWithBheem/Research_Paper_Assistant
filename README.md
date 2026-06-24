@@ -18,6 +18,7 @@ The system retrieves the most relevant research papers based on the user's query
 * FastAPI backend for scalable deployment
 * Retrieval-Augmented Generation (RAG) pipeline
 * Local LLM integration through Ollama
+* Re-ranking using Cross-Encoder for better retrieval
 
 ## Architecture
 
@@ -35,7 +36,10 @@ Query Embedding
 FAISS Vector Search
      │
      ▼
-Top-K Relevant Papers
+Cross-Encoder Re-ranking
+     │
+     ▼
+Top-K relevant papers
      │
      ▼
 Context Construction
@@ -62,6 +66,7 @@ Generated Response
 * Scikit-Learn
 * NumPy
 * Pandas
+* CrossEncoder
 
 ### LLM
 
@@ -79,7 +84,7 @@ The system uses research paper abstracts from the arXiv dataset.
 Each paper contains:
 
 * Title
-* Abstract
+* Abstract (Summaries)
 * Metadata
 
 The abstracts are converted into dense vector embeddings using Sentence Transformers and stored inside a FAISS vector index for efficient similarity search.
@@ -112,6 +117,7 @@ When a user enters a query:
 
 1. The query is embedded.
 2. Similar papers are retrieved from FAISS.
+3. Retrieved papers are re-ranked.
 3. Top relevant papers are selected.
 
 ### Step 4: AI-Assisted Explanation
@@ -143,7 +149,7 @@ The assistant explains how vector embeddings are stored in a vector database, re
 
 ## Future Improvements
 
-* Cross-Encoder Re-ranking
+* Cross-Encoder Re-ranking ✅
 * Hybrid Search (BM25 + Embeddings)
 * PDF Upload Support
 * Citation Generation
